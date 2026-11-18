@@ -475,8 +475,8 @@ function SocialLinks({ labels = false }: { labels?: boolean }) {
   return (
     <div className={`social-links ${labels ? "with-labels" : ""}`}>
       <a href="https://github.com/macaqui" target="_blank" rel="noreferrer" aria-label="GitHub de Samuel Hincapié"><Icon name="github" />{labels && <span>GitHub</span>}</a>
-      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn (enlace configurable)"><Icon name="linkedin" />{labels && <span>LinkedIn</span>}</a>
-      <a href="mailto:tu-correo@ejemplo.com" aria-label="Enviar correo"><Icon name="mail" />{labels && <span>tu-correo@ejemplo.com</span>}</a>
+      <a href="https://www.linkedin.com/in/samuel-velez-0154b22a2" target="_blank" rel="noreferrer" aria-label="LinkedIn de Samuel Hincapié"><Icon name="linkedin" />{labels && <span>LinkedIn</span>}</a>
+      <a href="mailto:Samuelvelezhinca@gmail.com" aria-label="Enviar correo"><Icon name="mail" />{labels && <span>Samuelvelezhinca@gmail.com</span>}</a>
     </div>
   );
 }
@@ -513,7 +513,7 @@ function ContactForm() {
       {confirmed ? (
         <div className="form-success" role="status">
           <Icon name="check" /><div><strong>Tu mensaje está listo.</strong><p>Este sitio no tiene un backend configurado. Puedes enviarlo directamente por correo.</p></div>
-          <a className="button button-small" href="mailto:tu-correo@ejemplo.com?subject=Consulta%20desde%20el%20portafolio">Abrir correo <Icon name="mail" size={16} /></a>
+          <a className="button button-small" href="mailto:Samuelvelezhinca@gmail.com?subject=Consulta%20desde%20el%20portafolio">Abrir correo <Icon name="mail" size={16} /></a>
         </div>
       ) : <button className="button submit-button" type="submit">Enviar mensaje <Icon name="arrow" size={18} /></button>}
       <p className="form-note">Al enviar, validaremos tus datos y te ofreceremos la alternativa de contacto por correo.</p>
