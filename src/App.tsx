@@ -461,7 +461,7 @@ type Proyecto = {
 };
 
 // En local y en Render la API esta en el mismo servidor; en GitHub Pages uso la de Render.
-const API = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.indexOf("onrender.com") !== -1) ? "" : "https://portafolio.onrender.com";
+const API = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.indexOf("onrender.com") !== -1) ? "" : "https://portafolio-9yy2.onrender.com";
 
 function ProjectsApi() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);

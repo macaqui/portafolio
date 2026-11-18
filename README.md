@@ -114,8 +114,9 @@ El repositorio trae un archivo `render.yaml` para subirlo a [Render](https://ren
 3. Elige este repositorio y confirma.
 
 Render lee el `render.yaml`, compila la página con Vite y arma el servicio solo. Cuando
-termina, el portafolio queda en `https://portafolio.onrender.com/` y ahí mismo funciona
-la API.
+termina, el portafolio queda en `https://portafolio-9yy2.onrender.com/` y ahí mismo funciona
+la API. (El nombre `portafolio` ya estaba ocupado en Render, por eso la dirección lleva
+el sufijo `9yy2`.)
 
 La página publicada en GitHub Pages usa esta misma API: si no está en local, apunta a la
 dirección de Render, así que para ver los datos ahí el servicio tiene que estar encendido.
