@@ -41,3 +41,20 @@ vite.config.ts     # configuración de Vite (React, Tailwind y alias "@")
 ---
 
 Proyecto desarrollado por **Samuel Hincapié** como parte de su portafolio de desarrollo de software.
+
+---
+
+## Abrirlo con doble clic (sin servidor ni internet)
+
+```bash
+npm run build:usb      # genera dist-usb/index.html
+```
+
+Ese comando produce **un solo archivo HTML** con el CSS y el JavaScript
+incrustados. Funciona abriéndolo con doble clic (por ejemplo desde una USB), sin
+servidor y sin conexión.
+
+**¿Por qué hace falta?** Al abrir `dist/index.html` con `file://` el navegador
+bloquea los módulos ES que se descargan, porque los trata como una petición
+cross-origin desde el origen `null`, y la página queda en blanco. Al incrustar
+el código dentro del HTML ya no hay nada que descargar.

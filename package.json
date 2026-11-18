@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:usb": "vite build && node scripts/usb.mjs",
     "preview": "vite preview",
     "format": "oxfmt"
   },
