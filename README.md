@@ -2,6 +2,9 @@
 
 Portafolio personal de desarrollador, construido con **React 19 + Vite + TypeScript + Tailwind CSS v4**.
 
+> 🌐 **En vivo:** <https://macaqui.github.io/portafolio/> — se publica solo con GitHub Pages
+> (`.github/workflows/pages.yml`) cada vez que se sube un cambio a `main`.
+
 ## Qué incluye
 
 | Sección | Contenido |
