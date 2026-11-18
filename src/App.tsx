@@ -452,6 +452,111 @@ function ProjectsGrid({ openModal }: { openModal: (content: ModalContent) => voi
   );
 }
 
+type Proyecto = {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  enlace: string;
+  creado: string;
+};
+
+function ProjectsApi() {
+  const [proyectos, setProyectos] = useState<Proyecto[]>([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
+
+  // La página y la API se sirven desde el mismo puerto, por eso la ruta es relativa.
+  async function cargar() {
+    try {
+      const respuesta = await fetch("/api/proyectos");
+      if (!respuesta.ok) throw new Error("No se pudo listar");
+      setProyectos(await respuesta.json());
+      setError("");
+    } catch {
+      setError("No se pudieron cargar los proyectos.");
+    } finally {
+      setCargando(false);
+    }
+  }
+
+  useEffect(() => {
+    cargar();
+  }, []);
+
+  async function crear(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formulario = event.currentTarget;
+    const datos = new FormData(formulario);
+    try {
+      const respuesta = await fetch("/api/proyectos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          titulo: String(datos.get("titulo") || "").trim(),
+          descripcion: String(datos.get("descripcion") || "").trim(),
+          enlace: String(datos.get("enlace") || "").trim(),
+        }),
+      });
+      if (!respuesta.ok) throw new Error("No se pudo crear");
+      formulario.reset();
+      setError("");
+      cargar();
+    } catch {
+      setError("No se pudo guardar el proyecto.");
+    }
+  }
+
+  async function borrar(id: number) {
+    try {
+      const respuesta = await fetch(`/api/proyectos/${id}`, { method: "DELETE" });
+      if (!respuesta.ok) throw new Error("No se pudo borrar");
+      setError("");
+      cargar();
+    } catch {
+      setError("No se pudo borrar el proyecto.");
+    }
+  }
+
+  return (
+    <section className="section section-alt" id="proyectos-api">
+      <div className="container">
+        <SectionHeading eyebrow="PROYECTOS DESDE LA API" title="Proyectos guardados en la base de datos." subtitle="Esta lista se carga desde la API del portafolio. Puedes agregar un proyecto nuevo o borrar los que ya no quieras mostrar." />
+        <div className="grid gap-7 lg:grid-cols-[minmax(0,360px)_1fr] lg:items-start">
+          <form className="contact-form" onSubmit={crear}>
+            <label>Título <span>*</span><input name="titulo" placeholder="Nombre del proyecto" required /></label>
+            <label>Descripción <span>*</span><textarea name="descripcion" rows={3} placeholder="De qué trata el proyecto" required /></label>
+            <label>Enlace <span>*</span><input name="enlace" type="url" placeholder="https://ejemplo.com" required /></label>
+            <button className="button submit-button" type="submit">Agregar proyecto <Icon name="arrow" size={18} /></button>
+          </form>
+          <div>
+            {error && <p className="mb-4 text-[12px] text-[#fca5a5]">{error}</p>}
+            {cargando ? (
+              <p className="text-[13px] text-[#a1a8b8]">Cargando proyectos...</p>
+            ) : proyectos.length === 0 ? (
+              <p className="text-[13px] text-[#a1a8b8]">Todavía no hay proyectos guardados.</p>
+            ) : (
+              <div className="projects-grid">
+                {proyectos.map(proyecto => (
+                  <article className="project-card" key={proyecto.id}>
+                    <div className="project-info">
+                      <div className="project-title-row"><h3>{proyecto.titulo}</h3><span>API / {String(proyecto.id).padStart(2, "0")}</span></div>
+                      <p>{proyecto.descripcion}</p>
+                      <div className="project-actions">
+                        <a className="button button-small" href={proyecto.enlace} target="_blank" rel="noreferrer">Ver proyecto <Icon name="arrow" size={16} /></a>
+                        <button className="button button-small button-secondary" onClick={() => borrar(proyecto.id)}>Borrar <Icon name="x" size={16} /></button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProcessSection() {
   return (
     <section className="section section-alt">
@@ -583,6 +688,7 @@ export default function App() {
         <ServicesGrid openModal={setModal} />
         <TechnologyTabs />
         <ProjectsGrid openModal={setModal} />
+        <ProjectsApi />
         <ProcessSection />
         <ContactSection />
       </main>

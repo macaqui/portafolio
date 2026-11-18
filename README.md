@@ -61,3 +61,46 @@ servidor y sin conexión.
 bloquea los módulos ES que se descargan, porque los trata como una petición
 cross-origin desde el origen `null`, y la página queda en blanco. Al incrustar
 el código dentro del HTML ya no hay nada que descargar.
+
+---
+
+## Backend
+
+El backend es un servidor Node.js + Express con Prisma y SQLite (un archivo
+local, sin servidor de base de datos). Sirve la página compilada de `dist/` y
+una API REST para los proyectos del portafolio. La página consume esa API con
+`fetch` usando rutas relativas, porque todo se sirve desde el mismo puerto.
+
+### Instalación y arranque
+
+La carpeta `dist/` no se sube al repositorio, así que primero hay que compilar la
+página desde la raíz del proyecto:
+
+```bash
+npm install
+npm run build        # genera la carpeta dist/ que sirve el backend
+```
+
+Después se instala y arranca el backend:
+
+```bash
+cd server
+npm install
+npx prisma db push   # crea la base de datos SQLite y la tabla
+npm start            # queda en http://localhost:3006
+```
+
+También existe `npm run dev`, que reinicia el servidor al guardar cambios.
+
+### Rutas de la API
+
+| Método | Ruta | Qué hace |
+| --- | --- | --- |
+| GET | `/api/proyectos` | Lista todos los proyectos |
+| GET | `/api/proyectos/:id` | Devuelve un proyecto (404 si no existe) |
+| POST | `/api/proyectos` | Crea un proyecto (201) |
+| PUT | `/api/proyectos/:id` | Actualiza un proyecto (404 si no existe) |
+| DELETE | `/api/proyectos/:id` | Elimina un proyecto (404 si no existe) |
+
+El puerto se define con `PORT` en `server/.env` (por defecto 3006). Ese archivo
+no se sube al repositorio; la plantilla está en `server/.env.example`.
