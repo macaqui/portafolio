@@ -460,6 +460,9 @@ type Proyecto = {
   creado: string;
 };
 
+// En local y en Render la API esta en el mismo servidor; en GitHub Pages uso la de Render.
+const API = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.indexOf("onrender.com") !== -1) ? "" : "https://portafolio.onrender.com";
+
 function ProjectsApi() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -468,7 +471,7 @@ function ProjectsApi() {
   // La página y la API se sirven desde el mismo puerto, por eso la ruta es relativa.
   async function cargar() {
     try {
-      const respuesta = await fetch("/api/proyectos");
+      const respuesta = await fetch(API + "/api/proyectos");
       if (!respuesta.ok) throw new Error("No se pudo listar");
       setProyectos(await respuesta.json());
       setError("");
@@ -488,7 +491,7 @@ function ProjectsApi() {
     const formulario = event.currentTarget;
     const datos = new FormData(formulario);
     try {
-      const respuesta = await fetch("/api/proyectos", {
+      const respuesta = await fetch(API + "/api/proyectos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -508,7 +511,7 @@ function ProjectsApi() {
 
   async function borrar(id: number) {
     try {
-      const respuesta = await fetch(`/api/proyectos/${id}`, { method: "DELETE" });
+      const respuesta = await fetch(`${API}/api/proyectos/${id}`, { method: "DELETE" });
       if (!respuesta.ok) throw new Error("No se pudo borrar");
       setError("");
       cargar();
