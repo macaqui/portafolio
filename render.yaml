@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: portafolio
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run build && cd server && npm install --include=dev && npx prisma generate
+    startCommand: cd server && npx prisma db push && node src/index.js
+    autoDeployTrigger: commit
+    envVars:
+      - key: DATABASE_URL
+        value: file:./dev.db

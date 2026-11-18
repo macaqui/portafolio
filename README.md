@@ -104,3 +104,20 @@ También existe `npm run dev`, que reinicia el servidor al guardar cambios.
 
 El puerto se define con `PORT` en `server/.env` (por defecto 3006). Ese archivo
 no se sube al repositorio; la plantilla está en `server/.env.example`.
+
+## Despliegue en Render
+
+El repositorio trae un archivo `render.yaml` para subirlo a [Render](https://render.com) como Blueprint.
+
+1. Crea una cuenta en Render (puedes entrar con GitHub).
+2. Pulsa "New" y luego "Blueprint".
+3. Elige este repositorio y confirma.
+
+Render lee el `render.yaml`, compila la página con Vite y arma el servicio solo. Cuando
+termina, el portafolio queda en `https://portafolio.onrender.com/` y ahí mismo funciona
+la API.
+
+En el plan gratis el disco es temporal: la base SQLite se crea de nuevo cada vez que el
+servicio arranca, así que los datos que agregues desde la página se pierden al reiniciar
+y vuelven los 3 datos de ejemplo. El servicio también se duerme tras 15 minutos sin
+visitas y tarda unos segundos en despertar.
